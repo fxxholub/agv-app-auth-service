@@ -1,0 +1,22 @@
+# This Docker Compose is meant to be used for development and local testing purposes
+
+services:
+  agv-app-auth-service:
+    image: agv-app-auth-service
+    container_name: agv-app-auth-service
+    platform: linux/arm64 # Dockerfile base images based on: linux/amd64, linux/arm64, linux/arm64/v8
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BUILD_CONFIGURATION: Debug # Debug or Release (defaults to Release in Dockerfile)
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    volumes:
+     - agv-app-auth-service-data:/app/data
+
+volumes:
+  agv-app-auth-service-data:
